@@ -31,4 +31,26 @@ class AuthorController extends AbstractController
                 'tabAuthors'=>$authors
                 ));
     }
+    #[Route('/author/{id}', name: 'author_details')]
+public function authorDetails($id)
+{
+    $authors = array(
+        array('id' => 1, 'username' => 'Victor Hugo', 'email' => 'victor.hugo@gmail.com', 'nb_books' => 100,'image'=>'imgs/1.jfif'),
+        array('id' => 2, 'username' => 'William Shakespeare', 'email' => 'william.shakespeare@gmail.com', 'nb_books' => 200,'image'=>'imgs/2.jfif'),
+        array('id' => 3, 'username' => 'Taha Hussein', 'email' => 'taha.hussein@gmail.com', 'nb_books' => 300,'image'=>'imgs/3.jfif'),
+    );
+
+    
+    $author = null;
+    foreach ($authors as $a) {
+        if ($a['id'] == $id) {
+            $author = $a;
+            break;
+        }
+    }
+
+    return $this->render('author/showAuthor.html.twig', [
+        'author' => $author,
+    ]);
+}
 }
