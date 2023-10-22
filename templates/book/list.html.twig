@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body> 
+<h1>list Book</h1>
+<a href="{{ path('app_AddBook')}}">Add Book</a>
+
+<table border="1">
+ <tr>
+        <th>Title</th>
+        <th>published</th>
+        <th>Publication date</th>
+        <th>category</th>
+        <th>author</th>
+        <th>Actions</th>
+        <th>Actions</th>
+        <th>Actions</th>
+        
+    </tr>
+
+    {% set published= 0 %}
+    {% set notPublished= 0 %}
+    {% for b in books %}
+{#        {% if b.published == 1  %}#}
+        {% if b.published == 1 %}
+        {% set published= published+1 %}
+        {% else %}
+        {% set notPublished= notPublished+1 %}
+        {% endif %}
+
+
+     <tr>
+    <td>{{ b.title |upper }}</td>
+   <td>{% if b.published ==1 %}
+            published</td>
+            {% else %}
+            notPublished
+            {% endif %}
+    <td>{{ b.publicationDate | date('M-d-Y') }}</td>
+    <td> {{b.category }}</td>
+     <td>{{ b.author }}</td>
+    <td><a href="{{path('update_book',{ref:b.ref})}}">Update</a></td>
+    <td><a href="{{ path('app_deleteBook', {'ref': b.ref}) }}">delete</a></td>
+    <td><a href="{{ path('app_detailBook', {'ref': b.ref}) }}">detail</a></td>
+        </td>
+ </tr>
+    {% else %}
+    <h2>Tab Vide</h2>
+
+  {% endfor %}
+<h3>Nb_books ={{books|length}}</h3>
+<h3>Books Published :{{published}}</h3>
+<h3>Books notPublished :{{notPublished}}</h3>
+</table>
+</body>
+</html>
