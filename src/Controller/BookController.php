@@ -102,7 +102,48 @@ class BookController extends AbstractController
 
 }
 
+#[Route('/search',name:'Search')]
+function SearchBook(Request $request,BookRepository $repository){
+    $ref=$request->get('r');
+    $book=$repository->SearchByRef($ref);
+    return $this->render('book/list.html.twig',
+    ['books'=>$book]);
+}
+#[Route('/bookList')]
+function listByAuthors(Request $request,BookRepository $repository){
 
+    $book=$repository->booksListByAuthors();
+    return $this->render('book/list.html.twig',
+    ['books'=>$book]);
+}
+
+#[Route('/findb')]
+function findBook(Request $request,BookRepository $repository){
+
+    return $this->render('book/list.html.twig',["books"=>$repository->findBook()]
+    );
+}
+
+#[Route('/findBook')]
+function findBookDate(Request $request,BookRepository $repository){
+
+    return $this->render('book/list.html.twig',["books"=>$repository->findByDate()]
+    );
+}
+
+#[Route('/updateCat', name: "update_cat")]
+public function updateCategory(BookRepository $repository)
+{
+    $repository->updateCat();
+    return $this->redirectToRoute("list_book");
+}
+
+#[Route('/nbrBook')]
+function NumberBooks(Request $request,BookRepository $repository){
+    $book=$repository->numberOfBooks();
+    return $this->render('book/list.html.twig',
+    ['books'=>$book]);
+}
 
 }
 

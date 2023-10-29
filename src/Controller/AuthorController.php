@@ -27,6 +27,7 @@ public function list(AuthorRepository $repository) {
     return $this->render("author/listAuthors.html.twig",
      array (        'tabAuthors'=>$authors
 ));
+
     
 
 }
@@ -121,7 +122,25 @@ public function  add (ManagerRegistry $manager, Request $req)
         return $this->redirectToRoute('authors');
     }
 
+    #[Route('/searchNb', name: "search_nb")]
+    public function searchAuthors(AuthorRepository $repository, Request $req)
+    {
+
+        $min = $req->get('min');
+        $max = $req->get('max');
+        return $this->render('author/listAuthors.html.twig', ["tabAuthors" => $repository->nbBooksMinMax($min, $max)]);
+    }
+
+    #[Route('/remove', name: "remove")]
+    public function removeA(AuthorRepository $repository)
+    {
+        $repository->removeAuthorr();
+
+        return $this->redirectToRoute("authors");
+    }
 }
+
+
 
 
 
